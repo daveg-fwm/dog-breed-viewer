@@ -37,9 +37,10 @@ export function DogImages({ selectedBreed }: DogImagesProps) {
   if (isPending || isFetching)
     return (
       <>
-        <DogImage isLoading={isPending || isFetching} />
-        <DogImage isLoading={isPending || isFetching} />
-        <DogImage isLoading={isPending || isFetching} />
+        {Array.from({ length: 3 }).map((_, index) => (
+          <DogImage key={index} isLoading={isPending || isFetching} />
+        ))}
+
         <div className="col-span-full mx-auto mt-8 h-10 w-10 animate-spin text-indigo-400">
           <Spinner />
         </div>
@@ -56,9 +57,9 @@ export function DogImages({ selectedBreed }: DogImagesProps) {
           </Button>
         </div>
 
-        <DogImage />
-        <DogImage />
-        <DogImage />
+        {Array.from({ length: 3 }).map((_, index) => (
+          <DogImage key={index} />
+        ))}
       </>
     );
 

@@ -49,9 +49,9 @@ export default function Home() {
         </Button>
 
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
-          <DogImage />
-          <DogImage />
-          <DogImage />
+          {Array.from({ length: 3 }).map((_, index) => (
+            <DogImage key={index} />
+          ))}
         </div>
       </div>
     );
@@ -70,9 +70,9 @@ export default function Home() {
           <DogImages selectedBreed={selectedBreed} />
         ) : (
           <>
-            <DogImage />
-            <DogImage />
-            <DogImage />
+            {Array.from({ length: 3 }).map((_, index) => (
+              <DogImage key={index} />
+            ))}
           </>
         )}
       </div>
