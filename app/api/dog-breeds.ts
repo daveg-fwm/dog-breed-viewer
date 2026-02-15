@@ -4,12 +4,13 @@ import { capitalizeString } from "~/utils/capitalize-string";
  * Usually this would come from an env variable, but for ease of use I am simply hardcoding the
  * public url here.
  */
-const baseUrl = "https://dog.ceo/api/breeds";
+const baseUrl = "https://dog.ceo/api";
 
 type GetDogBreedListResponse = { label: string; value: string }[];
+type GetRandomDogBreedImagesResponse = string[];
 
 export async function getDogBreedList(): Promise<GetDogBreedListResponse> {
-  const response = await fetch(`${baseUrl}/list/all`);
+  const response = await fetch(`${baseUrl}/breeds/list/all`);
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -32,4 +33,19 @@ export async function getDogBreedList(): Promise<GetDogBreedListResponse> {
   }, [] as GetDogBreedListResponse);
 
   return breeds.sort((a, b) => a.value.localeCompare(b.value));
+}
+
+export async function getRandomDogBreedImages(
+  breed: string,
+): Promise<GetRandomDogBreedImagesResponse> {
+  const response = await fetch(`${baseUrl}/breed/${breed}/images/random/3`);
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const data = (await response.json()) as { message: string[] };
+  const images = data.message;
+
+  return images;
 }

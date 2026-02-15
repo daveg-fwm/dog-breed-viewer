@@ -5,9 +5,11 @@ import type { Route } from "./+types/home";
 import type { Item } from "~/components/ui/SearchableDropdown";
 
 import { getDogBreedList } from "~/api/dog-breeds";
+
 import { SearchableDropdown } from "~/components/ui/SearchableDropdown";
-import { DogImage } from "~/components/ui/DogImage";
 import { HomeLoadingSkeleton } from "~/components/section/HomeLoadingSkeleton";
+import { DogImage } from "~/components/ui/DogImage";
+import { DogImages } from "~/components/section/DogImages";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -22,7 +24,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   const [selectedBreed, setSelectedBreed] = useState({ label: "", value: "" });
 
-  const { isPending, error, data, isFetching } = useQuery({
+  const { isPending, error, data } = useQuery({
     queryKey: ["dogBreedList"],
     queryFn: getDogBreedList,
   });
@@ -44,10 +46,16 @@ export default function Home() {
         updateSelectedItem={updateSelectedItem}
       />
 
-      <div className="mt-8 flex gap-4">
-        <DogImage />
-        <DogImage />
-        <DogImage />
+      <div className="mt-8 grid gap-4 lg:grid-cols-3">
+        {selectedBreed.value ? (
+          <DogImages selectedBreed={selectedBreed.value} />
+        ) : (
+          <>
+            <DogImage />
+            <DogImage />
+            <DogImage />
+          </>
+        )}
       </div>
     </section>
   );

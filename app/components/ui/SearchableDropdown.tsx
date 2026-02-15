@@ -37,7 +37,7 @@ export function SearchableDropdown({
 
   return (
     <Combobox
-      className="mx-auto w-[500px]"
+      className="mx-auto max-w-[500px]"
       as="div"
       value={selectedItem}
       onChange={(item) => {
