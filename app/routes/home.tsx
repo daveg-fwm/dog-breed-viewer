@@ -1,13 +1,54 @@
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import type { Item } from "~/components/ui/SearchableDropdown";
+
+import { getDogBreedList } from "~/api/dog-breeds";
+import { SearchableDropdown } from "~/components/ui/SearchableDropdown";
+import { DogImage } from "~/components/ui/DogImage";
+import { HomeLoadingSkeleton } from "~/components/section/HomeLoadingSkeleton";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Dog Breed Viewer" },
+    {
+      name: "description",
+      content: "Browse a list of dog breeds and view random images for a selected breed.",
+    },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  const [selectedBreed, setSelectedBreed] = useState({ label: "", value: "" });
+
+  const { isPending, error, data, isFetching } = useQuery({
+    queryKey: ["dogBreedList"],
+    queryFn: getDogBreedList,
+  });
+
+  const updateSelectedItem = (item: Item) => {
+    setSelectedBreed(item);
+  };
+
+  if (isPending) return <HomeLoadingSkeleton />;
+
+  if (error) return error.message;
+
+  return (
+    <section>
+      <SearchableDropdown
+        label="Choose your favourite breed"
+        items={data}
+        selectedItem={selectedBreed}
+        updateSelectedItem={updateSelectedItem}
+      />
+
+      <div className="mt-8 flex gap-4">
+        <DogImage />
+        <DogImage />
+        <DogImage />
+      </div>
+    </section>
+  );
 }
