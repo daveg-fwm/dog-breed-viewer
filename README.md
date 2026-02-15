@@ -9,6 +9,7 @@
 - Tanstack Query
 - TailwindCSS
 - Headless UI
+- Tailwind Plus
 
 ## Getting Started
 
