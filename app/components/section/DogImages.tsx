@@ -4,38 +4,59 @@ import { useRef, useEffect } from "react";
 import { getRandomDogBreedImages } from "~/api/dog-breeds";
 
 import { DogImage } from "~/components/ui/DogImage";
+import { Button } from "~/components/ui/Button";
+import Spinner from "~/images/spinner.svg?react";
 
 type DogImagesProps = {
-  selectedBreed: string;
+  selectedBreed: { label: string; value: string };
 };
 
 export function DogImages({ selectedBreed }: DogImagesProps) {
   const previousBreedRef = useRef("");
 
   useEffect(() => {
-    previousBreedRef.current = selectedBreed;
+    previousBreedRef.current = selectedBreed.value;
   }, [selectedBreed]);
 
   const {
     data: images,
     isPending,
+    isFetching,
     error,
+    refetch,
   } = useQuery({
-    queryKey: ["randomDogBreedImages", selectedBreed],
-    queryFn: () => getRandomDogBreedImages(selectedBreed),
-    enabled: previousBreedRef.current !== selectedBreed,
+    queryKey: ["randomDogBreedImages", selectedBreed.value],
+    queryFn: () => getRandomDogBreedImages(selectedBreed.value),
+    enabled: previousBreedRef.current !== selectedBreed.value,
   });
 
-  if (isPending)
+  const onButtonClick = () => {
+    refetch();
+  };
+
+  if (isPending || isFetching)
     return (
       <>
-        <DogImage isLoading={isPending} />
-        <DogImage isLoading={isPending} />
-        <DogImage isLoading={isPending} />
+        <DogImage isLoading={isPending || isFetching} />
+        <DogImage isLoading={isPending || isFetching} />
+        <DogImage isLoading={isPending || isFetching} />
+        <div className="col-span-full mx-auto mt-8 h-10 w-10 animate-spin text-indigo-400">
+          <Spinner />
+        </div>
       </>
     );
 
   if (error) return error.message;
 
-  return images.map((image) => <DogImage key={image} url={image} />);
+  return (
+    <>
+      <DogImage url={images[0]} />
+      <DogImage url={images[1]} />
+      <DogImage url={images[2]} />
+
+      <Button className="col-span-full mx-auto mt-8" onClick={onButtonClick}>
+        {`Find more photos of ${selectedBreed.label}s`}
+      </Button>
+    </>
+  );
 }

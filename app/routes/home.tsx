@@ -48,7 +48,7 @@ export default function Home() {
 
       <div className="mt-8 grid gap-4 lg:grid-cols-3">
         {selectedBreed.value ? (
-          <DogImages selectedBreed={selectedBreed.value} />
+          <DogImages selectedBreed={selectedBreed} />
         ) : (
           <>
             <DogImage />

@@ -16,7 +16,7 @@ export function DogImage({ url, isLoading }: DogImageprops) {
       ) : null}
 
       {url ? (
-        <img className="h-full w-full object-cover text-indigo-400" src={url} />
+        <img className="h-full w-full object-cover" src={url} />
       ) : (
         <div className="p-30">
           <DogIllustration />
