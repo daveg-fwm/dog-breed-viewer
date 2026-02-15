@@ -46,7 +46,21 @@ export function DogImages({ selectedBreed }: DogImagesProps) {
       </>
     );
 
-  if (error) return error.message;
+  if (error)
+    return (
+      <>
+        <div className="col-span-full mx-auto text-center">
+          <p className="text-gray-500">Apologies, we seem to be having some technical issues 🙈</p>
+          <Button className="mx-auto mt-4 mb-6" onClick={onButtonClick}>
+            Try again
+          </Button>
+        </div>
+
+        <DogImage />
+        <DogImage />
+        <DogImage />
+      </>
+    );
 
   return (
     <>

@@ -10,6 +10,7 @@ import { SearchableDropdown } from "~/components/ui/SearchableDropdown";
 import { HomeLoadingSkeleton } from "~/components/section/HomeLoadingSkeleton";
 import { DogImage } from "~/components/ui/DogImage";
 import { DogImages } from "~/components/section/DogImages";
+import { Button } from "~/components/ui/Button";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -24,10 +25,14 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   const [selectedBreed, setSelectedBreed] = useState({ label: "", value: "" });
 
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data, refetch } = useQuery({
     queryKey: ["dogBreedList"],
     queryFn: getDogBreedList,
   });
+
+  const onButtonClick = () => {
+    refetch();
+  };
 
   const updateSelectedItem = (item: Item) => {
     setSelectedBreed(item);
@@ -35,7 +40,21 @@ export default function Home() {
 
   if (isPending) return <HomeLoadingSkeleton />;
 
-  if (error) return error.message;
+  if (error)
+    return (
+      <div className="text-center">
+        <p className="text-gray-500">Apologies, we seem to be having some technical issues 🙈</p>
+        <Button className="mx-auto mt-4 mb-6" onClick={onButtonClick}>
+          Try again
+        </Button>
+
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          <DogImage />
+          <DogImage />
+          <DogImage />
+        </div>
+      </div>
+    );
 
   return (
     <section>
