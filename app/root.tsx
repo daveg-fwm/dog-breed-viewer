@@ -1,18 +1,19 @@
 import {
-  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
 } from "react-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import type { Route } from "./+types/root";
-import "./app.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Header } from "~/components/layout/Header";
 import { HomeLoadingSkeleton } from "~/components/section/HomeLoadingSkeleton";
+
+import type { Route } from "./+types/root";
+import "./app.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

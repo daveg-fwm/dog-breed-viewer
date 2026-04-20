@@ -1,18 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-import type { Route } from "./+types/home";
-import type { Item } from "~/components/ui/SearchableDropdown";
+import { useQuery } from "@tanstack/react-query";
 
 import { getDogBreedList } from "~/api/dog-breeds";
-
-import { SearchableDropdown } from "~/components/ui/SearchableDropdown";
-import { HomeLoadingSkeleton } from "~/components/section/HomeLoadingSkeleton";
-import { DogImage } from "~/components/ui/DogImage";
 import { DogImages } from "~/components/section/DogImages";
+import { HomeLoadingSkeleton } from "~/components/section/HomeLoadingSkeleton";
 import { Button } from "~/components/ui/Button";
+import { DogImage } from "~/components/ui/DogImage";
+import type { Item } from "~/components/ui/SearchableDropdown";
+import { SearchableDropdown } from "~/components/ui/SearchableDropdown";
 
-export function meta({}: Route.MetaArgs) {
+import type { Route } from "./+types/home";
+
+export function meta(_args: Route.MetaArgs) {
   return [
     { title: "Dog Breed Viewer" },
     {
@@ -38,9 +38,11 @@ export default function Home() {
     setSelectedBreed(item);
   };
 
-  if (isPending) return <HomeLoadingSkeleton />;
+  if (isPending) {
+    return <HomeLoadingSkeleton />;
+  }
 
-  if (error)
+  if (error) {
     return (
       <div className="text-center">
         <p className="text-gray-500">Apologies, we seem to be having some technical issues 🙈</p>
@@ -55,6 +57,7 @@ export default function Home() {
         </div>
       </div>
     );
+  }
 
   return (
     <section>

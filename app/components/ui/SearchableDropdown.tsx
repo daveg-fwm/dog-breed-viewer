@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Combobox,
   ComboboxButton,
@@ -7,7 +9,6 @@ import {
   Label,
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
 
 export type Item = { label: string; value: string };
 

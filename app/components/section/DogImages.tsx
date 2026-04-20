@@ -1,10 +1,10 @@
+import { useEffect, useRef } from "react";
+
 import { useQuery } from "@tanstack/react-query";
-import { useRef, useEffect } from "react";
 
 import { getRandomDogBreedImages } from "~/api/dog-breeds";
-
-import { DogImage } from "~/components/ui/DogImage";
 import { Button } from "~/components/ui/Button";
+import { DogImage } from "~/components/ui/DogImage";
 import Spinner from "~/images/spinner.svg?react";
 
 type DogImagesProps = {
@@ -34,7 +34,7 @@ export function DogImages({ selectedBreed }: DogImagesProps) {
     refetch();
   };
 
-  if (isPending || isFetching)
+  if (isPending || isFetching) {
     return (
       <>
         {Array.from({ length: 3 }).map((_, index) => (
@@ -46,8 +46,9 @@ export function DogImages({ selectedBreed }: DogImagesProps) {
         </div>
       </>
     );
+  }
 
-  if (error)
+  if (error) {
     return (
       <>
         <div className="col-span-full mx-auto text-center">
@@ -62,6 +63,7 @@ export function DogImages({ selectedBreed }: DogImagesProps) {
         ))}
       </>
     );
+  }
 
   return (
     <>
