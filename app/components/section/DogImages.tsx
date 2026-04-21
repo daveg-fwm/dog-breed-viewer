@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-
 import { useQuery } from "@tanstack/react-query";
 
 import { getRandomDogBreedImages } from "~/api/dog-breeds";
@@ -12,12 +10,6 @@ type DogImagesProps = {
 };
 
 export function DogImages({ selectedBreed }: DogImagesProps) {
-  const previousBreedRef = useRef("");
-
-  useEffect(() => {
-    previousBreedRef.current = selectedBreed.value;
-  }, [selectedBreed]);
-
   const {
     data: images,
     isPending,
@@ -27,7 +19,8 @@ export function DogImages({ selectedBreed }: DogImagesProps) {
   } = useQuery({
     queryKey: ["randomDogBreedImages", selectedBreed.value],
     queryFn: () => getRandomDogBreedImages(selectedBreed.value),
-    enabled: previousBreedRef.current !== selectedBreed.value,
+    staleTime: Number.POSITIVE_INFINITY,
+    refetchOnWindowFocus: false,
   });
 
   const onButtonClick = () => {

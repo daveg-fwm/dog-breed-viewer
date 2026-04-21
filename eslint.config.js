@@ -1,4 +1,5 @@
 import eslintPrettierRecommended from "eslint-plugin-prettier/recommended";
+import eslintReactHooks from "eslint-plugin-react-hooks";
 import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
 
@@ -20,6 +21,7 @@ export default defineConfig(
   eslintJs.configs.recommended,
   ...tseslint.configs.recommended,
   eslintReact.configs["recommended-typescript"],
+  eslintReactHooks.configs.flat["recommended-latest"],
   eslintPrettierRecommended,
   {
     languageOptions: {
